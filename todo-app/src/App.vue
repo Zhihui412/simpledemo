@@ -3,8 +3,8 @@
     <div class="container">
       <h1>欢迎使用 Leon 待办事项！</h1>
       <todo-add :tid="todos.length" @add-todo="addTodo"></todo-add>
-      <todo-filter></todo-filter>
-      <todo-list :todos = "todos"></todo-list>
+      <todo-filter :selected="filter" @change-filter="filter = $event"></todo-filter>
+      <todo-list :todos="filteredTodos"></todo-list>
     </div>
   </main>
 </template>
@@ -13,34 +13,37 @@
 import TodoAdd from "./components/TodoAdd.vue";
 import TodoFilter from "./components/TodoFilter.vue";
 import TodoList from "./components/TodoList.vue";
-import { ref } from "vue"
+import { computed, ref } from "vue";
 
 export default {
   name: "App",
   components: { TodoAdd, TodoList, TodoFilter },
   setup() {
     const todos = ref([]);
+
+    // 定义一个添加todo的函数
     const addTodo = (todo) => todos.value.push(todo);
+
+    const filter = ref("all");
+    const filteredTodos = computed(() => {
+      switch (filter.value) {
+        case "done":
+          return todos.value.filter((todo) => todo.completed);
+        case "todo":
+          return todos.value.filter((todo) => !todo.completed);
+        default:
+          return todos.value;
+    }
+  });
+
     return {
       todos,
       addTodo,
+      filter,
+      filteredTodos,
     };
   },
-
-
 };
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 <style>

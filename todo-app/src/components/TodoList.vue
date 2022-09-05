@@ -4,7 +4,7 @@
     v-for="todo in todos " 
     :key="todo.id"
     :todo-item  = "todo"
-    
+    @change-state="todo.completed = $event.target.checked"
     
     
     ></todo-list-item>
