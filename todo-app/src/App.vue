@@ -2,45 +2,45 @@
   <main>
     <div class="container">
       <h1>欢迎使用 Leon 待办事项！</h1>
-      <div class="input-add">
-        <input type="text" name="todo" />
-        <button>
-          <i class="plus"></i>
-        </button>
-      </div>
-      <div class="filters">
-        <div class="filyer active">全部</div>
-        <div class="filyer">已完成</div>
-        <div class="filyer">未完成</div>
-      </div>
-      <div class="todo-list"></div>
-      <div class="todo-item">
-        <label>
-          <input type="checkbox" />
-          Todo 1
-        </label>
-      </div>
-      <div class="todo-item">
-        <label>
-          <input type="checkbox" />
-          Todo 2
-        </label>
-      </div>
-      <div class="todo-item">
-        <label>
-          <input type="checkbox" />
-          Todo 3
-        </label>
-      </div>
+      <todo-add :tid="todos.length" @add-todo="addTodo"></todo-add>
+      <todo-filter></todo-filter>
+      <todo-list :todos = "todos"></todo-list>
     </div>
   </main>
 </template>
 
 <script>
+import TodoAdd from "./components/TodoAdd.vue";
+import TodoFilter from "./components/TodoFilter.vue";
+import TodoList from "./components/TodoList.vue";
+import { ref } from "vue"
 
 export default {
   name: "App",
+  components: { TodoAdd, TodoList, TodoFilter },
+  setup() {
+    const todos = ref([]);
+    const addTodo = (todo) => todos.value.push(todo);
+    return {
+      todos,
+      addTodo,
+    };
+  },
+
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 <style>
@@ -61,7 +61,7 @@ main {
 }
 
 .container {
-  width: 60%;
+  width: 70%;
   max-width: 400px;
   box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.15);
   border-radius: 24px;
@@ -71,11 +71,7 @@ main {
 
 h1 {
   margin: 24px;
-  font-size: 28px;
+  font-size: 24px;
   color: #414873;
 }
-
-
-
-
 </style>
