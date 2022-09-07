@@ -20,15 +20,21 @@ export default {
     
     name:"TodoAdd",
     setup(props, context) {
+      return useEmitAddTodo(props.tid, context.emit)
+    },
+
+}
+
+function useEmitAddTodo(tid, emit) {
         const todoContent = ref("");
 
         const emitAddTodo = () => {
             const todo = {
-                id:  props.tid,
+                id:  tid,
                 content: todoContent.value,
                 completed: false,
             };
-            context.emit("add-todo", todo);
+            emit("add-todo", todo);
             //清空输入框内容
             todoContent.value = "";
         }
@@ -37,8 +43,6 @@ export default {
             todoContent,
             emitAddTodo,
         };
-    },
-
 }
 </script>
 

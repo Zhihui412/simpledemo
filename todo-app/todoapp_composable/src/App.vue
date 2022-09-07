@@ -13,7 +13,8 @@
 import TodoAdd from "./components/TodoAdd.vue";
 import TodoFilter from "./components/TodoFilter.vue";
 import TodoList from "./components/TodoList.vue";
-import { computed, ref } from "vue";
+import useTodos from "./composables/useTodo.js"
+import useFilteredTodos from "./composables/useFilteredTodos.js"
 
 
 export default {
@@ -21,22 +22,11 @@ export default {
   components: { TodoAdd, TodoList, TodoFilter },
   
   setup() {
-    const todos = ref([]);
 
-    // 定义一个添加todo的函数
-    const addTodo = (todo) => todos.value.push(todo);
+    const {todos, addTodo}  = useTodos();
+    const { filter, filteredTodos} = useFilteredTodos(todos);
 
-    const filter = ref("all");
-    const filteredTodos = computed(() => {
-      switch (filter.value) {
-        case "done":
-          return todos.value.filter((todo) => todo.completed);
-        case "todo":
-          return todos.value.filter((todo) => !todo.completed);
-        default:
-          return todos.value;
-    }
-  });
+
   
     return {
       todos,
