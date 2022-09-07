@@ -15,9 +15,11 @@ import TodoFilter from "./components/TodoFilter.vue";
 import TodoList from "./components/TodoList.vue";
 import { computed, ref } from "vue";
 
+
 export default {
   name: "App",
   components: { TodoAdd, TodoList, TodoFilter },
+  
   setup() {
     const todos = ref([]);
 
@@ -35,7 +37,7 @@ export default {
           return todos.value;
     }
   });
-
+  
     return {
       todos,
       addTodo,

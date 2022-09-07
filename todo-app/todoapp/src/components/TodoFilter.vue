@@ -4,7 +4,7 @@
     v-for="filter in filters"
     :key="filter.value"
     class="filter"
-    @click="$emit('change-filter', filter.value)"
+    @click="$emit('change-filter', filter.value) "
     :class="{ active: selected === filter.value }"
     >
     {{filter.label}}
